@@ -152,12 +152,12 @@ real_path=$PWD
 echo "DEBUG: WORKSPACE: $real_path"
 
 # Get basic information
-if [[ $real_path =~ '/kernel/' ]]; then
+if [[ $real_path =~ '/kernel-tests/' ]]; then
+  repo_name=kernel-tests
+  case_path=${real_path/#*kernel-tests/}
+elif [[ $real_path =~ '/kernel/' ]]; then
   repo_name=kernel
   case_path=${real_path/#*kernel/}
-elif [[ $real_path =~ '/kernel-tests/' ]]; then
-  repo_name=kernel-tests
-  case_path=echo ${real_path/#*kernel-tests/}
 else
   echo "ERROR: path '$real_path' cannot be handled."
   exit 1
