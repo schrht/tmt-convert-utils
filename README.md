@@ -16,18 +16,19 @@ This script will create the following files for you:
 - ./tests/smidetect.fmf
 - ./metadata (adding `repoRequires=automotive/include` if file exists)
 
-> The structure of the TMT file will match this example:
+> The conversion logic of the script is designed based on this example:  
 > https://gitlab.com/redhat/centos-stream/tests/kernel/kernel-tests/-/tree/main/security/integrity/2063913
 
 What you need to do are inspect the files and modify the `runtest.sh`. For example including the helper functions and skipping some RHEL-only logics:
 
 ```
 # Enable TMT testing for RHIVOS
-. ../../../automotive/include/include.sh || exit 1
+. ../../automotive/include/include.sh || exit 1
+: ${OUTPUTFILE:=runtest.log}
 
-# Include rhts environment
 if ! kernel_automotive; then
-	. /usr/bin/rhts-environment.sh || exit 1
+    # Include rhts environment
+    . /usr/bin/rhts-environment.sh || exit 1
 fi
 ```
 
