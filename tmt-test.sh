@@ -20,6 +20,8 @@ function show_usage() {
 	echo "  - REPOSITORY: public|private"
 	echo "  - PLATFORM  : vm|pi"
 	echo "  - TESTS     : 'casename1 casename2 ...'"
+	echo "Notes:"
+	echo "  Update VARIABLEs before using."
 }
 
 while getopts :hr:p:t: ARGS; do

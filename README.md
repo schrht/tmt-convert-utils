@@ -41,6 +41,8 @@ Usage:
   - REPOSITORY: public|private
   - PLATFORM  : mv|pi
   - TESTS     : 'casename1 casename2 ...'
+Notes:  
+  Update VARIABLEs before using.
 
 ## tmt-log-push.sh
 
