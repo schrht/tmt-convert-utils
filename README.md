@@ -34,21 +34,25 @@ fi
 
 ## tmt-test.sh
 
-Description:  
-  Trigger TMT tests over Local VM or Respberry Pi.  
-Usage:  
-  tmt-test.sh <-r REPOSITORY> <-p PLATFORM> <-t TESTS>  
+```
+Description:
+  Trigger TMT tests over Local VM or Respberry Pi.
+Usage:
+  tmt-test.sh <-r REPOSITORY> <-p PLATFORM> <-t TESTS>
   - REPOSITORY: public|private
-  - PLATFORM  : mv|pi
+  - PLATFORM  : vm|pi
   - TESTS     : 'casename1 casename2 ...'
-Notes:  
+Notes:
   Update VARIABLEs before using.
+```
 
 ## tmt-log-push.sh
 
-Description:  
-  This script pushes log to the file server.  
-Usage:  
-  $(basename $0) <logfile1> [logfile2] ...  
-Notes:  
+```
+Description:
+  This script pushes log to the file server.
+Usage:
+  $(basename $0) <logfile1> [logfile2] ...
+Notes:
   Update VARIABLEs before using.
+```
