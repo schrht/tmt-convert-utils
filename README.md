@@ -34,17 +34,17 @@ fi
 
 ## tmt-test.sh
 
-Description:
-  Trigger TMT tests over Local VM or Respberry Pi.
-Usage:
-  tmt-test.sh <-r REPOSITORY> <-p PLATFORM> <-t TESTS>
+Description:  
+  Trigger TMT tests over Local VM or Respberry Pi.  
+Usage:  
+  tmt-test.sh <-r REPOSITORY> <-p PLATFORM> <-t TESTS>  
   - REPOSITORY: public|private
   - PLATFORM  : mv|pi
   - TESTS     : 'casename1 casename2 ...'
 
 ## tmt-test-pub.sh (deprecated)
 
-These scripts help run the TMT test against local VM and Respberry Pi.
+Help run the TMT test against local VM and Respberry Pi.
 Update the VERIABLES (ex. CODEPATH) before running the scripts.
 
 Usage:

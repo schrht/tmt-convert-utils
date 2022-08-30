@@ -18,7 +18,7 @@ function show_usage() {
 	echo "Usage:"
 	echo "  $(basename $0) <-r REPOSITORY> <-p PLATFORM> <-t TESTS>"
 	echo "  - REPOSITORY: public|private"
-	echo "  - PLATFORM  : mv|pi"
+	echo "  - PLATFORM  : vm|pi"
 	echo "  - TESTS     : 'casename1 casename2 ...'"
 }
 
@@ -64,10 +64,10 @@ fi
 
 case $repository in
 public)
-	CODEPATH=$PUBLIC_CODEPATH
+	codepath=$PUBLIC_CODEPATH
 	;;
 private)
-	CODEPATH=$PRIVATE_CODEPATH
+	codepath=$PRIVATE_CODEPATH
 	;;
 *)
 	echo "$(basename $0): unexpected REPOSITORY." >&2
@@ -98,11 +98,16 @@ esac
 
 for casename in $tests; do
 	echo -e "\nRun case $casename ..."
+	found=$(tmt --root $codepath test ls ${casename} | wc -l)
+	if [ $found -ne 1 ]; then
+		echo "$(basename $0): Found $found case(s), expected 1, skiped." >&2
+		continue
+	fi
 
 	timestamp=$(date +%y%m%d%H%M%S)
 	testlog=$path/$casename.$arch.$timestamp.log
 
-	tmt --root $CODEPATH run -vvv --debug --all plans -n $casename \
+	tmt --root $codepath run -vvv --debug --all plans -n ${casename}$ \
 		provision --how=connect --guest=$host --port=$port --user=root \
 		--password=password 2>&1 | tee $testlog
 done
