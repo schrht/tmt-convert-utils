@@ -41,3 +41,12 @@ Usage:
   - REPOSITORY: public|private
   - PLATFORM  : mv|pi
   - TESTS     : 'casename1 casename2 ...'
+
+## tmt-log-push.sh
+
+Description:  
+  This script pushes log to the file server.  
+Usage:  
+  $(basename $0) <logfile1> [logfile2] ...  
+Notes:  
+  Update VARIABLEs before using.
