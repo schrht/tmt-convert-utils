@@ -14,8 +14,10 @@ function show_usage() {
     echo "  This script pushes log to the file server."
     echo "Usage:"
     echo "  $(basename $0) <logfile1> [logfile2] ..."
+    echo "Example:"
+    echo "  $(basename $0) *.log"
     echo "Notes:"
-    echo "  Update VARIABLEs before using."
+	echo "  Update hardcoded VARIABLEs before using."
 }
 
 # Main

@@ -16,12 +16,14 @@ function show_usage() {
 	echo "Description:"
 	echo "  Trigger TMT tests over Local VM or Respberry Pi."
 	echo "Usage:"
-	echo "  $(basename $0) <-r REPOSITORY> <-p PLATFORM> <-t TESTS>"
-	echo "  - REPOSITORY: public|private"
+	echo "  $(basename $0) <-p PLATFORM> <-r REPOSITORY> <-t TESTS>"
 	echo "  - PLATFORM  : vm|pi"
+	echo "  - REPOSITORY: public|private"
 	echo "  - TESTS     : 'casename1 casename2 ...'"
+	echo "Example:"
+	echo "  $(basename $0) -p vm -r private -t \"auto_kernel_check rt_check\""
 	echo "Notes:"
-	echo "  Update VARIABLEs before using."
+	echo "  Update hardcoded VARIABLEs before using."
 }
 
 while getopts :hr:p:t: ARGS; do
