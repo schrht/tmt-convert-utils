@@ -111,7 +111,7 @@ for casename in $tests; do
 	timestamp=$(date +%y%m%d%H%M%S)
 	testlog=$path/$casename.$arch.$timestamp.log
 
-	tmt --root $codepath run -vvv --debug --all plans -n ${casename}$ \
+	tmt --root $codepath run -vvv --debug --all plans -n ${casename}\$ \
 		provision --how=connect --guest=$host --port=$port --user=root \
 		--password=password 2>&1 | tee $testlog
 done
