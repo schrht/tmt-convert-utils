@@ -60,3 +60,7 @@ Example:
 Notes:
   Update hardcoded VARIABLEs before using.
 ```
+
+## tmt-vm.sh
+
+This script help to start a RHIVOS VM through QEMU. Notes: Update hardcoded VARIABLEs before using.
