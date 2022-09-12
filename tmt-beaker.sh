@@ -15,13 +15,14 @@ function show_usage() {
   echo "Description:"
   echo "  Trigger beaker jobs for verifiying code changes on RHEL."
   echo "Usage:"
-  echo "  $(basename $0) <-f HOSTFILTER> <-d DISTRO> <-a ARCH> <-r REPOSITORY> <-b BRANCH> <-p PATH>"
+  echo "  $(basename $0) <-f HOSTFILTER> <-d DISTRO> <-a ARCH> <-r REPOSITORY> <-b BRANCH> <-p PATH> [-D]"
   echo "  - HOSTFILTER: Filter name defined in ~/.beaker_client/host-filter"
   echo "  - DISTRO    : RHEL-9.1.0"
   echo "  - ARCH      : x86_64, ppc64le, s390x, aarch64"
   echo "  - REPOSITORY: public, private"
   echo "  - BRANCH    : main, mr_branch_name"
   echo "  - PATH      : Ex. rt-tests/env_test"
+  echo "  - DRYRUN    : Show bkr command only if '-D' presents"
   echo "Available HOSTFILTER(s):"
   echo "  $(cat ~/.beaker_client/host-filter | awk '{print $1}' | xargs)"
   echo "Example:"
@@ -51,7 +52,7 @@ function verify_task() {
   fi
 }
 
-while getopts :hf:d:a:r:b:p: ARGS; do
+while getopts :hf:d:a:r:b:p:D ARGS; do
   case $ARGS in
   h)
     # Help option
@@ -81,6 +82,10 @@ while getopts :hf:d:a:r:b:p: ARGS; do
   p)
     # PATH option
     path=$OPTARG
+    ;;
+  D)
+    # DRYRUN option
+    dryrun=1
     ;;
   "?")
     echo "$(basename $0): unknown option: $OPTARG" >&2
@@ -134,9 +139,16 @@ cmd="bkr workflow-tomorrow --restraint --distro $distro --arch $arch \
   --ks-meta redhat_ca_cert --whiteboard \"$whiteboard\" \
   --task $task_url"
 
-if verify_task; then
-  echo -e "\nBeaker command:\n$cmd"
-  exit 0
+if ! verify_task; then
+  echo -e "\nWARNING: The test can be failed or becomes meaningless."
+  dryrun=1
+fi
+
+if ! ((dryrun)); then
+  echo -e "\nCommand to schedule this job:\n$cmd"
+  echo -e "\nScheduling this job..."
+  eval $cmd
 else
-  exit 1
+  echo -e "\nCommand to schedule this job:\n$cmd"
+  echo -e "\nAbove job has not been scheduled."
 fi
