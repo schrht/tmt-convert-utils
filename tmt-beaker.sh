@@ -18,7 +18,7 @@ function show_usage() {
   echo "  $(basename $0) <-f HOSTFILTER> <-d DISTRO> <-a ARCH> <-r REPOSITORY> <-b BRANCH> <-p PATH> [-D]"
   echo "  - HOSTFILTER: Filter name defined in ~/.beaker_client/host-filter"
   echo "  - DISTRO    : RHEL-9.1.0"
-  echo "  - ARCH      : x86_64, ppc64le, s390x, aarch64"
+  echo "  - ARCH      : x86_64, ppc64le, s390x, aarch64 (separated by commas)"
   echo "  - REPOSITORY: public, private"
   echo "  - BRANCH    : main, mr_branch_name"
   echo "  - PATH      : Ex. rt-tests/env_test"
@@ -132,23 +132,24 @@ private)
   ;;
 esac
 
-whiteboard="$(basename $0) $path $distro ($arch)"
-
-cmd="bkr workflow-tomorrow --restraint --distro $distro --arch $arch \
-  --systype Machine --host-filter $hostfilter --crb --ignore-panic \
-  --ks-meta redhat_ca_cert --whiteboard \"$whiteboard\" \
-  --task $task_url"
-
 if ! verify_task; then
   echo -e "\nWARNING: The test can be failed or becomes meaningless."
   dryrun=1
 fi
 
-if ! ((dryrun)); then
-  echo -e "\nCommand to schedule this job:\n$cmd"
-  echo -e "\nScheduling this job..."
-  eval $cmd
-else
-  echo -e "\nCommand to schedule this job:\n$cmd"
-  echo -e "\nAbove job has not been scheduled."
-fi
+for arch in $(echo $arch | tr ',' ' '); do
+  whiteboard="$(basename $0) $path $distro ($arch)"
+  cmd="bkr workflow-tomorrow --restraint --distro $distro --arch $arch \
+    --systype Machine --host-filter $hostfilter --crb --ignore-panic \
+    --ks-meta redhat_ca_cert --whiteboard \"$whiteboard\" \
+    --task $task_url"
+
+  echo -e "----\nCommand to schedule this job:\n$cmd"
+
+  if ! ((dryrun)); then
+    echo -e "\nScheduling this job..."
+    eval $cmd
+  else
+    echo -e "\nAbove job has not been scheduled."
+  fi
+done

@@ -71,13 +71,14 @@ This script help to start a RHIVOS VM through QEMU. Notes: Update hardcoded VARI
 Description:
   Trigger beaker jobs for verifiying code changes on RHEL.
 Usage:
-  tmt-beaker.sh <-f HOSTFILTER> <-d DISTRO> <-a ARCH> <-r REPOSITORY> <-b BRANCH> <-p PATH>
+  tmt-beaker.sh <-f HOSTFILTER> <-d DISTRO> <-a ARCH> <-r REPOSITORY> <-b BRANCH> <-p PATH> [-D]
   - HOSTFILTER: Filter name defined in ~/.beaker_client/host-filter
   - DISTRO    : RHEL-9.1.0
-  - ARCH      : x86_64, ppc64le, s390x, aarch64
+  - ARCH      : x86_64, ppc64le, s390x, aarch64 (separated by commas)
   - REPOSITORY: public, private
   - BRANCH    : main, mr_branch_name
   - PATH      : Ex. rt-tests/env_test
+  - DRYRUN    : Show bkr command only if '-D' presents
 Available HOSTFILTER(s):
   INTEL_6_79_1 INTEL_6_63_2 INTEL_6_85_4 AMD_23 INTEL_6_60_3 INTEL_6_58_9 INTEL_6_44_2 INTEL_6_42_7 INTEL_6_30_5 AMD INTEL ICELAKE CASCADELAKE KABYLAKE SKYLAKE BROADWELL HASWELL1 HASWELL2 IVY1 IVY2 SANDY1 SANDY2 RHEL8 RHEL6VM RHEL7VM RHEL8VM RHEL9VM THUNDERX_2 HUAWEI_D05 HUAWEI_D06 NVME ROME MILAN WIRELESS NOGSS NOGSS_MEMORY_MIN_16G RHEL7z RHEL8z RHEL83z RHELRT INTEL_RT AMD_RT IBM__POWER9_NUMAGT_1 INTEL__ICELAKE_NUMAGT_1 TRACEBLACKLIST RTS_NUMA2_VM
 Example:
