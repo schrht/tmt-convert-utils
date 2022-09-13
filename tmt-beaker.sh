@@ -22,7 +22,7 @@ function show_usage() {
   echo "  - REPOSITORY: public, private"
   echo "  - BRANCH    : main, mr_branch_name"
   echo "  - PATH      : Ex. rt-tests/env_test"
-  echo "  - DRYRUN    : Show bkr command only if '-D' presents"
+  echo "  - DRYRUN(-D): If presents, show bkr command only"
   echo "Available HOSTFILTER(s):"
   echo "  $(cat ~/.beaker_client/host-filter | awk '{print $1}' | xargs)"
   echo "Example:"
