@@ -6,7 +6,7 @@
 # Update the following variables before use
 DEFAULT_HOSTFILTER=INTEL
 DEFAULT_DISTRO=RHEL-9.1.0
-DEFAULT_ARCH=x86_64
+DEFAULT_ARCH=x86_64,ppc64le,s390x,aarch64
 PUBLIC_REPO_URL=https://gitlab.com/schrht/kernel-tests
 PRIVATE_REPO_URL=https://gitlab.cee.redhat.com/cheshi/kernel
 
@@ -137,19 +137,17 @@ if ! verify_task; then
   dryrun=1
 fi
 
-for arch in $(echo $arch | tr ',' ' '); do
-  whiteboard="$(basename $0) $path $distro ($arch)"
-  cmd="bkr workflow-tomorrow --restraint --distro $distro --arch $arch \
-    --systype Machine --host-filter $hostfilter --crb --ignore-panic \
-    --ks-meta redhat_ca_cert --whiteboard \"$whiteboard\" \
-    --task $task_url"
+whiteboard="$(basename $0) $path $distro ($arch)"
+cmd="bkr workflow-tomorrow --restraint --distro $distro --arch $arch \
+  --systype Machine --host-filter $hostfilter --crb --ignore-panic \
+  --ks-meta redhat_ca_cert --url --whiteboard \"$whiteboard\" \
+  --task $task_url"
 
-  echo -e "----\nCommand to schedule this job:\n$cmd"
+echo -e "----\nCommand to schedule this job:\n$cmd"
 
-  if ! ((dryrun)); then
-    echo -e "\nScheduling this job..."
-    eval $cmd
-  else
-    echo -e "\nAbove job has not been scheduled."
-  fi
-done
+if ! ((dryrun)); then
+  echo -e "\nScheduling this job..."
+  eval $cmd
+else
+  echo -e "\nAbove job has not been scheduled."
+fi
