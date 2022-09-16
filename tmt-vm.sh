@@ -12,9 +12,9 @@ image=${1:-auto-osbuild-qemu-cs9-qa-ostree-x86_64-579942379.071ed0c0.qcow2}
 cpu_opts="-smp cpus=4"
 
 numa_opts="-machine hmat=on \
--m 2G,slots=2,maxmem=4G \
--object memory-backend-ram,size=1G,id=m0 \
--object memory-backend-ram,size=1G,id=m1 \
+-m 4G,slots=2,maxmem=8G \
+-object memory-backend-ram,size=2G,id=m0 \
+-object memory-backend-ram,size=2G,id=m1 \
 -numa node,nodeid=0,memdev=m0 \
 -numa node,nodeid=1,memdev=m1 \
 -smp 4,sockets=2,maxcpus=4  \
