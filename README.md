@@ -1,7 +1,7 @@
 # tmt-convert-utils
 Some scripts to help with TMT conversion
 
-# tmt-convert.sh
+## tmt-convert.sh
 
 This script helps convert the case, it can do some simple and repetitive things for you, including analyzing the RHTS Makefile and the restraint metadata file, and initializing the tmt support.
 
@@ -32,7 +32,7 @@ if ! kernel_automotive; then
 fi
 ```
 
-# tmt-test.sh
+## tmt-test.sh
 
 ```
 Description:
@@ -48,7 +48,7 @@ Notes:
   Update hardcoded VARIABLEs before using.
 ```
 
-# tmt-log-push.sh
+## tmt-log-push.sh
 
 ```
 Description:
@@ -61,11 +61,11 @@ Notes:
   Update hardcoded VARIABLEs before using.
 ```
 
-# tmt-vm.sh
+## tmt-vm.sh
 
 This script help to start a RHIVOS VM through QEMU. Notes: Update hardcoded VARIABLEs before using.
 
-# tmt-beaker.sh
+## tmt-beaker.sh
 
 Usage:
 
@@ -111,10 +111,10 @@ Successfully submitted as TJ#7004757
 https://beaker.engineering.redhat.com//jobs/7004757
 ```
 
-# tmt-check-code.sh (developing)
+## tmt-check-code.sh (developing)
 
 Locate code needs to be updated by searching for specific patterns.
 
-# tmt-check-code.sh (developing)
+## tmt-check-code.sh (developing)
 
 Find potential errors in log file by searching for specific patterns.
