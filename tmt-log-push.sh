@@ -6,7 +6,7 @@
 # Variables
 SERVER_NAME=file.bos.redhat.com
 SERVER_USER=cheshi
-SERVER_PATH=~/public_html/automotive/tmt_enablement/sst_kernel_rts/
+SERVER_PATH=~/public_html/automotive/tmt_enablement/
 
 # Function
 function show_usage() {
