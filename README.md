@@ -23,10 +23,10 @@ What you need to do are inspect the files and modify the `runtest.sh`. For examp
 
 ```
 # Enable TMT testing for RHIVOS
-. ../../automotive/include/include.sh || exit 1
-: ${OUTPUTFILE:=runtest.log}
+. ../../automotive/include/include.sh
+declare -F kernel_automotive && kernel_automotive && is_rhivos=1 || is_rhivos=0
 
-if ! kernel_automotive; then
+if ! (($is_rhivos)); then
     # Include rhts environment
     . /usr/bin/rhts-environment.sh || exit 1
 fi
