@@ -67,6 +67,8 @@ This script help to start a RHIVOS VM through QEMU. Notes: Update hardcoded VARI
 
 # tmt-beaker.sh
 
+Usage:
+
 ```
 Description:
   Trigger beaker jobs for verifiying code changes on RHEL.
@@ -86,6 +88,27 @@ Example:
 Notes:
   1. Follow https://docs.engineering.redhat.com/display/Automotive/Configure+beaker+client to setup;
   2. Update hardcoded VARIABLEs before using.
+```
+
+Example:
+
+```
+[cheshi@dhcp-89-35 ~]$ tmt-beaker.sh -f AUTOQE_NUMA2 -d RHEL-9.1.0 -r private -b auto-rt-tests-mr3 -a x86_64,aarch64,ppc64le,s390x -p general/scheduler/sched_rt_app
+Verifing https://gitlab.cee.redhat.com/cheshi/kernel/-/raw/auto-rt-tests-mr3/general/scheduler/sched_rt_app ...
+Verified general/scheduler/sched_rt_app: SUCCESS (PATH EXISTS AND AUTOMOTIVE CODE FOUND)
+----
+Command to schedule this job:
+bkr workflow-tomorrow --restraint --distro RHEL-9.1.0 --arch x86_64,aarch64,ppc64le,s390x     --systype Machine --host-filter AUTOQE_NUMA2 --crb --ignore-panic     --ks-meta redhat_ca_cert --whiteboard "tmt-beaker.sh general/scheduler/sched_rt_app RHEL-9.1.0 (x86_64,aarch64,ppc64le,s390x)" --url     --task https://gitlab.cee.redhat.com/cheshi/kernel/-/archive/auto-rt-tests-mr3/kernel-auto-rt-tests-mr3.tar.gz#general/scheduler/sched_rt_app
+ 
+Scheduling this job...
+Using distro rhel-9.1.0 from the command line
+Distro RHEL-9.1.0% scheduled using latest CTS_NIGHTLY tag
+Distro RHEL-9.1.0% scheduled using latest CTS_NIGHTLY tag
+Distro RHEL-9.1.0% scheduled using latest CTS_NIGHTLY tag
+Distro RHEL-9.1.0% scheduled using latest CTS_NIGHTLY tag
+Found 1 singlehost task, 4 recipe sets created
+Successfully submitted as TJ#7004757
+https://beaker.engineering.redhat.com//jobs/7004757
 ```
 
 # tmt-check-code.sh (developing)
