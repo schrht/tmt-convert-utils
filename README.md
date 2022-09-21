@@ -115,6 +115,6 @@ https://beaker.engineering.redhat.com//jobs/7004757
 
 Locate code needs to be updated by searching for specific patterns.
 
-## tmt-check-code.sh (developing)
+## tmt-check-log.sh (developing)
 
 Find potential errors in log file by searching for specific patterns.
