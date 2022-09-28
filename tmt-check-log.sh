@@ -31,6 +31,12 @@ function show_usage() {
     echo "  Update hardcoded VARIABLEs before using."
 }
 
+function title() {
+    echo
+    echo $@
+    echo "----------"
+}
+
 # Main
 [ -z $1 ] && show_usage && exit 1
 
@@ -41,6 +47,7 @@ else
 fi
 
 for p in "${PATTERNS[@]}"; do
+    title $p
     grep -n -e "$p" $file
 done
 

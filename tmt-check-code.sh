@@ -4,7 +4,7 @@
 # Description: Locate code needs to be updated by searching for specific patterns.
 
 # Update the following variables before use
-PATTERNS=("rhts" "yum" "dnf" "report_result")
+PATTERNS=("rhts" "yum" "dnf" "report_result" "/boot/config")
 
 # Function
 function show_usage() {
@@ -18,6 +18,12 @@ function show_usage() {
     echo "  Update hardcoded VARIABLEs before using."
 }
 
+function title() {
+    echo
+    echo $@
+    echo "----------"
+}
+
 # Main
 [ -z $1 ] && show_usage && exit 1
 
@@ -28,6 +34,7 @@ else
 fi
 
 for p in "${PATTERNS[@]}"; do
+    title $p
     grep -n -e "$p" $file
 done
 
