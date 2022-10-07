@@ -158,6 +158,9 @@ if [[ $real_path =~ '/kernel-tests/' ]]; then
 elif [[ $real_path =~ '/kernel/' ]]; then
   repo_name=kernel
   case_path=${real_path/#*kernel/}
+elif [[ $real_path =~ '/scheduler-benchmarks/' ]]; then
+  repo_name=scheduler-benchmarks
+  case_path=${real_path/#*scheduler-benchmarks/}
 else
   echo "ERROR: path '$real_path' cannot be handled."
   exit 1
