@@ -18,7 +18,7 @@ function show_usage() {
 	echo "Usage:"
 	echo "  $(basename $0) <-p PLATFORM> <-r REPOSITORY> <-t TESTS>"
 	echo "  - PLATFORM  : vm|pi"
-	echo "  - REPOSITORY: public|private"
+	echo "  - REPOSITORY: public|private|pt-sched"
 	echo "  - TESTS     : 'casename1 casename2 ...'"
 	echo "Example:"
 	echo "  $(basename $0) -p vm -r private -t \"auto_kernel_check rt_check\""
@@ -73,6 +73,11 @@ public)
 private)
 	codepath=$PRIVATE_CODEPATH
 	;;
+pt-sched)
+	codepath=/home/cheshi/mirror/codespace/scheduler-benchmarks
+	[ ! -f $HOME/.perf_glabel ] && date -u "+%Y-%m-%dT%H:%M:%S.%N" | sed 's/.\{8\}$/00000/' | tee $HOME/.perf_glabel
+	env_param="--environment GLABEL=$(cat $HOME/.perf_glabel)"
+	;;
 *)
 	echo "$(basename $0): unexpected REPOSITORY." >&2
 	show_usage
@@ -112,7 +117,8 @@ for casename in $tests; do
 	testlog=$path/$casename.$arch.$timestamp.log
 
 	tmt --context arch=$arch --root $codepath \
-		run -vvv --debug --all plans -n ${casename}\$ \
+		run -vvv --debug --all ${env_param} \
+		plans -n ${casename}\$ \
 		provision --how=connect --guest=$host --port=$port --user=root \
 		--password=password 2>&1 | tee $testlog
 done
