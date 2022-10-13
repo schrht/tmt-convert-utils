@@ -118,3 +118,28 @@ Locate code needs to be updated by searching for specific patterns.
 ## tmt-check-log.sh (developing)
 
 Find potential errors in log file by searching for specific patterns.
+
+## insert_required_packages.py
+
+In the early days of tmt conversion, we only inserted the required packages into the plan-fmf file, and current best practice requires us to insert the required packages into the test-fmf file as well. This script helps us fix it.
+
+```
+usage: insert_required_packages.py [-h] --pfmf PFMF --tfmf TFMF
+
+Read required packages from plan-fmf and write to test-fmf.
+
+options:
+  -h, --help   show this help message and exit
+  --pfmf PFMF  plan fmf file
+  --tfmf TFMF  test fmf file
+```
+
+Usage:
+```
+cd kernel-tests
+for pfmf in $(find . -type f -name *.fmf | grep '/plans/'); do
+    tfmf=${pfmf/plans/tests}
+    [ ! -f $tfmf ] && continue
+    ./insert_required_packages.py --pfmf $pfmf --tfmf $tfmf
+done
+```
