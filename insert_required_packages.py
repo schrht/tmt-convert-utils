@@ -26,12 +26,16 @@ ARGS = ARG_PARSER.parse_args()
 require_section = []
 with open(ARGS.pfmf, mode='r') as f:
     content = yaml.safe_load(f)
-    for step in content['prepare']:
-        if step.get('how') == 'install':
-            require_section.append('require:\n')
-            for pkg in step.get('package'):
-                require_section.append('  - ' + pkg + '\n')
-            break
+    if 'prepare' in content:
+        for step in content['prepare']:
+            if step.get('how') == 'install':
+                require_section.append('require:\n')
+                for pkg in step.get('package'):
+                    require_section.append('  - ' + pkg + '\n')
+                break
+    else:
+        print(f'There is no "prepare" section in {ARGS.pfmf}')
+        exit(1)
 
 if not require_section:
     print(f'Cannot read package list from {ARGS.pfmf}')
@@ -40,7 +44,7 @@ if not require_section:
 with open(ARGS.tfmf, mode='r') as f:
     content = yaml.safe_load(f)
 
-if content.get('require'):
+if 'require' in content:
     print(f'The "require" section already exists in {ARGS.tfmf}')
     exit(1)
 
