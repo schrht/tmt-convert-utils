@@ -134,7 +134,79 @@ options:
   --tfmf TFMF  test fmf file
 ```
 
-Usage:
+Note:
+I didn't update the `tmt-convert.sh` yet to insert required packages into test-fmf for you. So please use this script to "copy" the packages to test-fmf. See the following example.
+
+Example:
+```
+# Copy package list for the specific test "ktst_msg"
+[cheshi@fedora kernel]$ cd misc/ktst_msg/
+
+[cheshi@fedora ktst_msg]$ tree
+.
+├── ktst-cred.c
+├── ktst-fcntl.c
+├── ktst-msg.c
+├── ktst-sem.c
+├── ktst-shm.c
+├── Makefile
+├── plans
+│   ├── ktst_msg.fmf
+│   └── tmt.env
+├── PURPOSE
+├── runtest.sh
+└── tests
+    └── ktst_msg.fmf
+
+2 directories, 11 files
+
+# 4 packages are defined in plan-fmf
+[cheshi@fedora ktst_msg]$ cat ./plans/ktst_msg.fmf
+summary: "Kernel messaging test Written by Ulirich Drepper"
+discover:
+    how: fmf
+    test:
+        - /misc/ktst_msg/tests/ktst_msg
+execute:
+    how: tmt
+    framework: beakerlib
+prepare:
+  - name: Enable Repos
+    how: shell
+    script: |
+        . ./general/include/rhivos.sh
+        install_repos
+  - name: Install packages
+    how: install
+    package: [beakerlib, gcc,kernel-devel,glibc-devel]
+environment-file:
+  - ./misc/ktst_msg/plans/tmt.env
+
+# Copy the package list to the corresponding test-fmf
+[cheshi@fedora ktst_msg]$ insert_required_packages.py --pfmf ./plans/ktst_msg.fmf --tfmf ./tests/ktst_msg.fmf
+
+# 4 packages have been copied to test-fmf
+[cheshi@fedora ktst_msg]$ git diff
+diff --git a/misc/ktst_msg/tests/ktst_msg.fmf b/misc/ktst_msg/tests/ktst_msg.fmf
+index b382af9546..80df66c8da 100644
+--- a/misc/ktst_msg/tests/ktst_msg.fmf
++++ b/misc/ktst_msg/tests/ktst_msg.fmf
+@@ -30,6 +30,11 @@ component:
+ test: make run
+ path: /misc/ktst_msg
+ framework: shell 
++require:
++  - beakerlib
++  - gcc
++  - kernel-devel
++  - glibc-devel
+ duration: 180m
+ extra-summary: /kernel/misc/ktst_msg
+ extra-task: /kernel/misc/ktst_msg
+```
+
+In the example above, `insert_required_packages.py` read 4 packages from `./plans/ktst_msg.fmf` and inserted them into `./tests/ktst_msg.fmf`. You can also batch do this for all similar cases:
+
 ```
 cd kernel-tests
 for pfmf in $(find . -type f -name *.fmf | grep '/plans/'); do
@@ -143,3 +215,5 @@ for pfmf in $(find . -type f -name *.fmf | grep '/plans/'); do
     ./insert_required_packages.py --pfmf $pfmf --tfmf $tfmf
 done
 ```
+
+WARNING: This script is used to "copy" package list "inside" a specific test, you shouldn't use it across repos.
