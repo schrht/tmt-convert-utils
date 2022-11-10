@@ -43,11 +43,11 @@ function analyse_makefile() {
 function create_tmt_files() {
   echo "INFO: Creating tmt files."
 
-  echo "DEBUG: CASE_NAME: ${case_name:='TBD_NAME'}"
-  echo "DEBUG: CASE_DESCRIPTION: ${case_description:='TBD_CASE_DESCRIPTION'}"
-  echo "DEBUG: CASE_OWNER: ${case_owner:='TBD_CASE_OWNER'}"
-  echo "DEBUG: CASE_DURATION: ${case_duration:='TBD_CASE_DURATION'}"
-  echo "DEBUG: CASE_PACKAGES: ${case_packages:='TBD_CASE_PACKAGES'}"
+  echo "DEBUG: CASE_NAME: ${case_name:=TBD_NAME}"
+  echo "DEBUG: CASE_DESCRIPTION: ${case_description:=TBD_CASE_DESCRIPTION}"
+  echo "DEBUG: CASE_OWNER: ${case_owner:=TBD_CASE_OWNER}"
+  echo "DEBUG: CASE_DURATION: ${case_duration:=TBD_CASE_DURATION}"
+  echo "DEBUG: CASE_PACKAGES: ${case_packages:=TBD_CASE_PACKAGES}"
 
   mkdir -p $real_path/plans $real_path/tests || exit 1
   mkdir -p $real_path/plans $real_path/tests || exit 1
@@ -119,14 +119,14 @@ function create_metadata() {
   echo "INFO: Creating metadata for restraint."
   [ -f $real_path/metadata ] && exit 1
 
-  echo "DEBUG: CASE_NAME: ${case_name:='TBD_NAME'}"
-  echo "DEBUG: CASE_DESCRIPTION: ${case_description:='TBD_CASE_DESCRIPTION'}"
-  echo "DEBUG: CASE_OWNER: ${case_owner:='TBD_CASE_OWNER'}"
-  echo "DEBUG: CASE_DURATION: ${case_duration:='TBD_CASE_DURATION'}"
-  echo "DEBUG: CASE_PACKAGES: ${case_packages:='TBD_CASE_PACKAGES'}"
-  echo "DEBUG: CASE_LICENSE: ${case_license:='TBD_CASE_LICENSE'}"
-  echo "DEBUG: CASE_CONFIDENTIAL: ${case_confidential:='TBD_CASE_CONFIDENTIAL'}"
-  echo "DEBUG: CASE_DESTRUTIVE: ${case_destructive:='TBD_CASE_DESTRUTIVE'}"
+  echo "DEBUG: CASE_NAME: ${case_name:=TBD_NAME}"
+  echo "DEBUG: CASE_DESCRIPTION: ${case_description:=TBD_CASE_DESCRIPTION}"
+  echo "DEBUG: CASE_OWNER: ${case_owner:=TBD_CASE_OWNER}"
+  echo "DEBUG: CASE_DURATION: ${case_duration:=TBD_CASE_DURATION}"
+  echo "DEBUG: CASE_PACKAGES: ${case_packages:=TBD_CASE_PACKAGES}"
+  echo "DEBUG: CASE_LICENSE: ${case_license:=TBD_CASE_LICENSE}"
+  echo "DEBUG: CASE_CONFIDENTIAL: ${case_confidential:=TBD_CASE_CONFIDENTIAL}"
+  echo "DEBUG: CASE_DESTRUTIVE: ${case_destructive:=TBD_CASE_DESTRUTIVE}"
 
   echo "INFO: Creating $real_path/metadata"
   cat >$real_path/metadata <<EOF
