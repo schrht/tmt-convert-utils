@@ -134,8 +134,7 @@ options:
   --tfmf TFMF  test fmf file
 ```
 
-Note:
-I didn't update the `tmt-convert.sh` yet to insert required packages into test-fmf for you. So please use this script to "copy" the packages to test-fmf. See the following example.
+Note: The `tmt-convert.sh` has been updated to insert required packages into test-fmf for you.
 
 Example:
 ```

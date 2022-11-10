@@ -88,6 +88,7 @@ component:
 path: ${case_path}
 test: bash -x ./runtest.sh
 framework: beakerlib
+require: [${case_packages// /\, }]
 duration: ${case_duration}
 extra-summary: ${case_path}
 extra-task: ${case_path}
