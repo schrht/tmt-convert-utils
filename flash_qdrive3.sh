@@ -55,6 +55,7 @@ while getopts :hl:s:p: ARGS; do
 	esac
 done
 
+# Parse parameters
 if [ -z "$image_label" ] || [ -z "$soc" ]; then
 	echo "ERROR: Missing mandatory parameters."
 	show_usage
@@ -87,6 +88,12 @@ case $partition in
 	exit 1
 	;;
 esac
+
+# Check environment
+space=$(df --block-size G . | tail -1 | awk '{print $4}' | tr -d 'G')
+[ $space < 4 ] && echo "ERROR: There is no enough space left (at least 4GB)." && exit 1
+[ ! -d ~/qdrive_alpaca_python/ ] && echo "ERROR: ~/qdrive_alpaca_python/ does not exist." && exit 1
+! type fastboot &>/dev/null && echo "ERROR: 'fastboot' is not installed." && exit 1
 
 # Identify images
 baseurl=$BASEURL/$image_label/QDrive3/
