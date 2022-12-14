@@ -10,9 +10,10 @@ function show_usage() {
 	echo "  Download image and flash the qdrive3 board."
 	echo "Usage:"
 	echo "  $0 <-l IMAGE_LABEL> <-s SOC#> [-p PARTITION]"
-	echo "    - IMAGE_LABEL: label to find images (ex. ER1.2.1)"
-	echo "    - SOC#       : 1|2"
-	echo "    - PARTITION  : userdata|system_a|system_b"
+	echo "    - IMAGE_LABEL: the label to find images (ex. ER1.2.1)"
+	echo "    - SOC#       : the SOC to be flashed (value: 1,2)"
+	echo "    - PARTITION  : the partition to flash the OS image to"
+	echo "                   (value: userdata,system_a,system_b; default: userdata)"
 	echo "Example:"
 	echo "  $0 -l ER1.2.1 -s 1 -p userdata"
 	echo "  $0 -l ER1.2.1-rc2 -s 2"
@@ -25,6 +26,7 @@ while getopts :hl:s:p: ARGS; do
 	h)
 		# Help option
 		show_usage
+		exit 0
 		;;
 	l)
 		# IMAGE_LABEL option
@@ -111,7 +113,7 @@ root_img_hash=$(cat $tmpd/page.txt | grep 'a href=".*.xz.sha256"' | cut -d '"' -
 boot_img=$(cat $tmpd/page.txt | grep 'a href=".*.img"' | cut -d '"' -f 6)
 
 if [ -n "$root_img" ] && [ -n "$root_img_hash" ] && [ -n "$boot_img" ]; then
-	echo "INFO: Identified 3 image files."
+	echo "INFO: Identified 3 related files."
 else
 	echo "ERROR: Some of the files cannot be identified. Exiting."
 	exit 1

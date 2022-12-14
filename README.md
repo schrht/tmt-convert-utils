@@ -220,18 +220,28 @@ WARNING: This script is used to "copy" package list "inside" a specific test, yo
 ## flash_qdrive3.sh
 
 ```
-Description: download image and flash the qdrive3 board.
-Usage: ./flash_qdrive3.sh <IMAGE_LABEL> <SOC#>
-Example: ./flash_qdrive3.sh ER1.2.1 SOC1
+Description:
+  Download image and flash the qdrive3 board.
+Usage:
+  ./flash_qdrive3.sh <-l IMAGE_LABEL> <-s SOC#> [-p PARTITION]
+    - IMAGE_LABEL: the label to find images (ex. ER1.2.1)
+    - SOC#       : the SOC to be flashed (value: 1,2)
+    - PARTITION  : the partition to flash the OS image to
+                   (value: userdata,system_a,system_b; default: userdata)
+Example:
+  ./flash_qdrive3.sh -l ER1.2.1 -s 1 -p userdata
+  ./flash_qdrive3.sh -l ER1.2.1-rc2 -s 2
+Notes:
+  This tool should be used on sidekick.
 ```
 
 This script will help you download qdrive3 images from http://10.29.162.171:8080/in-vehicle-os-9/$IMAGE_LABEL/QDrive3/ and flash them to a specific SOC.
 
 Steps:
-1. Use it on sidekick
+1. Use this script on a sidekick
 2. Create and entry the directory named $IMAGE_LABEL
-3. Check the free space, there should be at least 4GB on the sidekick
+3. There should be at least 4GB on the sidekick (script will also do the check)
 4. Run the command and wating for the results
 5. Keep an eye on the SIP console so you can see the details
 
-Note: If you see call trace `dump_backtrace+0xb0/0x120` and `No working init found` while booting up, reflash the boot_a can solve this problem.
+Note: If you see call trace `dump_backtrace+0xb0/0x120` and `No working init found` while booting up, make sure you flashed into the correct partition, from ER1.2+ AutoQE team starts using `userdata` rather than `system_a`.
