@@ -216,3 +216,22 @@ done
 ```
 
 WARNING: This script is used to "copy" package list "inside" a specific test, you shouldn't use it across repos.
+
+## flash_qdrive3.sh
+
+```
+Description: download image and flash the qdrive3 board.
+Usage: ./flash_qdrive3.sh <IMAGE_LABEL> <SOC#>
+Example: ./flash_qdrive3.sh ER1.2.1 SOC1
+```
+
+This script will help you download qdrive3 images from http://10.29.162.171:8080/in-vehicle-os-9/$IMAGE_LABEL/QDrive3/ and flash them to a specific SOC.
+
+Steps:
+1. Use it on sidekick
+2. Create and entry the directory named $IMAGE_LABEL
+3. Check the free space, there should be at least 4GB on the sidekick
+4. Run the command and wating for the results
+5. Keep an eye on the SIP console so you can see the details
+
+Note: If you see call trace `dump_backtrace+0xb0/0x120` and `No working init found` while booting up, reflash the boot_a can solve this problem.
