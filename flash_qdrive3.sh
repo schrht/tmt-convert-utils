@@ -1,21 +1,21 @@
 #!/bin/bash
 
-# Description: download image and flush the qdrive3 board.
+# Description: download image and flash the qdrive3 board.
 set -e
 
 function usage() {
-	echo "Description: download image and flush the qdrive3 board."
+	echo "Description: download image and flash the qdrive3 board."
 	echo "Usage: $0 <IMAGE_LABEL> <SOC#>"
 	echo "Example: $0 ER1.2.1 SOC1"
 }
 
-if [[ ! "$1" =~ "ER*" ]]; then
+if [[ ! $1 =~ ER* ]]; then
 	echo "ERROR: Got unsupported IMAGE_LABEL ($1)."
 	usage
 	exit 1
 fi
 
-if [ "$2" != "SOC1" ] || [ "$2" != "SOC2" ]; then
+if [ "$2" != "SOC1" ] && [ "$2" != "SOC2" ]; then
 	echo "ERROR: Got unsupported SOC# ($2)."
 	usage
 	exit 1
@@ -52,11 +52,11 @@ echo "INFO: Downloading the files..."
 if [ -f "$root_img" ] || [ -f "$root_img_name" ] || [ -f "${root_img_name}.simg" ]; then
 	echo "INFO: root image already exists."
 else
-	curl -O $/baseurl/root_img
-	curl -O $/baseurl/root_img_hash
+	curl -O $baseurl/$root_img
+	curl -O $baseurl/$root_img_hash
 
 	echo "INFO: Verifying the downloads..."
-	sha256sum -c $root_img_bash || exit 1
+	sha256sum -c $root_img_hash || exit 1
 fi
 
 if [ -f "$boot_img" ]; then
@@ -80,16 +80,14 @@ else
 	img2simg $root_img_name ${root_img_name}.simg && rm -f $root_img_name || exit 1
 fi
 
-# Prepare to flush the board
+# Prepare to flash the board
 if [ $soc = SOC1 ]; then
-	echo "Preparing to flush SOC1 ..."
+	echo "Preparing to flash SOC1 ..."
 	python ~/qdrive_alpaca_python/PowerOffSOC1.py || exit 1
-	sleep 2
 	python ~/qdrive_alpaca_python/BootToFastBoot.py || exit 1
 elif [ $soc = SOC2 ]; then
-	echo "Preparing to flush SOC2 ..."
+	echo "Preparing to flash SOC2 ..."
 	python ~/qdrive_alpaca_python/PowerOffSOC2.py || exit 1
-	sleep 2
 	python ~/qdrive_alpaca_python/BootToFastBootSecondary.py || exit 1
 fi
 
