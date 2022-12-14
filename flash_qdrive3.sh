@@ -92,8 +92,8 @@ case $partition in
 esac
 
 # Check environment
-space=$(df --block-size G . | tail -1 | awk '{print $4}' | tr -d 'G')
-[ $space < 4 ] && echo "ERROR: There is no enough space left (at least 4GB)." && exit 1
+space=$(df --block-size M . | tail -1 | awk '{print $4}' | tr -d 'M')
+[ $space -lt 4096 ] && echo "ERROR: There is no enough space left (at least 4GB)." && exit 1
 [ ! -d ~/qdrive_alpaca_python/ ] && echo "ERROR: ~/qdrive_alpaca_python/ does not exist." && exit 1
 ! type fastboot &>/dev/null && echo "ERROR: 'fastboot' is not installed." && exit 1
 
@@ -104,7 +104,7 @@ echo "INFO: Identifing images from \"$baseurl\"..."
 tmpd=$(mktemp -d)
 curl $baseurl -o $tmpd/page.txt
 
-if grep "Not Found" $tmpd/page.txt; then
+if grep "Not Found" $tmpd/page.txt &>/dev/null; then
 	echo "ERROR: Failed to retrieve \"$baseurl\". Check the IMAGE_LABEL ($image_label)."
 fi
 
